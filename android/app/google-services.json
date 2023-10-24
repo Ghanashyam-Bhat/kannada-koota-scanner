@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "744628010568",
+    "project_id": "rajyotsava-ee997",
+    "storage_bucket": "rajyotsava-ee997.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744628010568:android:8a421312cecbdcb46b627d",
+        "android_client_info": {
+          "package_name": "pes.edu.rajyotsava"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC13Ck2YKo3xe5ez8SrH7tHUTp5VxHIg5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
