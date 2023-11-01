@@ -56,83 +56,104 @@ class HandleData extends StatelessWidget {
             final phone = attendeeData['phone'];
             final email = attendeeData['email'];
             final verified = attendeeData['verified'];
+            final isVip = attendeeData['isVip'];
 
-            return ListView(
-              padding: EdgeInsets.all(16.0),
-              children: [
-                ListTile(
-                  title: Text('Name', style: TextStyle(fontSize: 18)), // Customize text font and size
-                  subtitle: Text(
-                    name,
-                    style: TextStyle(fontSize: 16, color: Colors.red), // Set text color to red
-                  ),
+            final List<Widget> tiles = [
+              ListTile(
+                title: Text('Name', style: TextStyle(fontSize: 20)), // Customize text font and size
+                subtitle: Text(
+                  name,
+                  style: TextStyle(fontSize: 18, color: Colors.red), // Set text color to red
                 ),
-                ListTile(
-                  title: Text('ID', style: TextStyle(fontSize: 18)),
-                  subtitle: Text(
-                    id,
-                    style: TextStyle(fontSize: 16, color: Colors.red),
-                  ),
+              ),
+              ListTile(
+                title: Text('ID', style: TextStyle(fontSize: 20)),
+                subtitle: Text(
+                  id,
+                  style: TextStyle(fontSize: 18, color: Colors.red),
                 ),
-                ListTile(
-                  title: Text('Phone', style: TextStyle(fontSize: 18)),
-                  subtitle: Text(
-                    phone,
-                    style: TextStyle(fontSize: 16, color: Colors.red),
-                  ),
+              ),
+              ListTile(
+                title: Text('Phone', style: TextStyle(fontSize: 20)),
+                subtitle: Text(
+                  phone,
+                  style: TextStyle(fontSize: 18, color: Colors.red),
                 ),
-                ListTile(
-                  title: Text('Email', style: TextStyle(fontSize: 18)),
-                  subtitle: Text(
-                    email,
-                    style: TextStyle(fontSize: 16, color: Colors.red),
-                  ),
+              ),
+              ListTile(
+                title: Text('Email', style: TextStyle(fontSize: 20)),
+                subtitle: Text(
+                  email,
+                  style: TextStyle(fontSize: 18, color: Colors.red),
                 ),
-                if (!verified)
+              )
+            ];
+
+            if (isVip) {
+              tiles.add(
+                ListTile(
+                  title: Text('VIP Pass', style: TextStyle(fontSize: 20, color: Colors.black))
+                ),
+              );
+            }
+
+            if (!verified) {
+              tiles.add(
                   ElevatedButton(
                     onPressed: () {
                       // Handle authentication logic here
                       // You can use showDialog to show an authentication form
-                      updateData(hashVal, context,controller);
+                      updateData(hashVal, context, controller);
                     },
                     child: Text(
                       'Authenticate',
-                      style: TextStyle(color: Colors.white), // Set button text color to yellow
+                      style: TextStyle(color: Colors
+                          .white), // Set button text color to yellow
                     ),
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.all(30),
                       primary: Colors.green, // Set button color to red
                     ),
+                  ));
+            }
+          if (verified) {
+            tiles.add(
+                ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('User is already authenticated'),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text('GO TO SCANNER',
+                                  style: TextStyle(color: Colors.red)),
+                              // Set button text color to red
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                                Navigator.of(context).pop();
+                                _startScanning(controller);
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  child: Text('User Authenticated',
+                      style: TextStyle(color: Colors.white)),
+                  // Set button text color to yellow
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.all(30),
+                    primary: Colors.red, // Set button color to red
                   ),
-                if (verified)
-                  ElevatedButton(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('User is already authenticated'),
-                            actions: <Widget>[
-                              TextButton(
-                                child: Text('GO TO SCANNER', style: TextStyle(color: Colors.red)), // Set button text color to red
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pop();
-                                  _startScanning(controller);
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Text('User Authenticated', style: TextStyle(color: Colors.white)), // Set button text color to yellow
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.all(30),
-                      primary: Colors.red, // Set button color to red
-                    ),
-                  ),
-              ],
+                ));
+          }
+
+            return ListView(
+              padding: EdgeInsets.all(16.0),
+              children:tiles
             );
           } else {
             return Center(
